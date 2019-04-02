@@ -129,3 +129,50 @@ func Test_findMedianSortedArrays(t *testing.T) {
 		})
 	}
 }
+
+func Test_longestPalindrome(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		// TODO: Add test cases.
+		{"xx", args{"babad"}, "bab"},
+		{"xx", args{"cbbd"}, "bb"},
+		{"xx", args{"aba"}, "aba"},
+		{"xx", args{"abba"}, "abba"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := longestPalindrome(tt.args.s); got != tt.want {
+				t.Errorf("longestPalindrome() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_convert(t *testing.T) {
+	type args struct {
+		s       string
+		numRows int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		// TODO: Add test cases.
+		{"xx", args{"LEETCODEISHIRING", 3}, "LCIRETOESIIGEDHN"},
+		{"xx", args{"LEETCODEISHIRING", 4}, "LDREOEIIECIHNTSG"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := convert(tt.args.s, tt.args.numRows); got != tt.want {
+				t.Errorf("convert() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

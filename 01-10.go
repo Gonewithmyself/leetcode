@@ -1,5 +1,9 @@
 package leetcode
 
+import (
+	"bytes"
+)
+
 // 001
 func twoSum(nums []int, target int) []int {
 	l := len(nums)
@@ -142,4 +146,63 @@ func findMedianSortedArrays(A []int, B []int) float64 {
 	}
 
 	return 0
+}
+
+// 005
+func longestPalindrome(s string) string {
+	var res, tmp string
+	for i := range s {
+		tmp = longestPalindromeHelper(s, i, i)
+		if len(tmp) > len(res) {
+			res = tmp
+		}
+		tmp = longestPalindromeHelper(s, i, i+1)
+		if len(tmp) > len(res) {
+			res = tmp
+		}
+	}
+
+	return res
+}
+
+func longestPalindromeHelper(s string, l, r int) string {
+	c := len(s)
+	for l >= 0 && r < c && s[l] == s[r] {
+		l--
+		r++
+	}
+	return s[l+1 : r]
+}
+
+// 006
+func convert(s string, numRows int) string {
+	if numRows < 2 {
+		return s
+	}
+	var (
+		rows = make([][]byte, numRows)
+		idx  int
+		down = true
+	)
+	for i := 0; i < numRows; i++ {
+		rows[i] = make([]byte, 0, 1024)
+	}
+
+	for i := range s {
+		rows[idx] = append(rows[idx], s[i])
+		if down {
+			idx++
+		} else {
+			idx--
+		}
+		if idx > numRows-1 {
+			idx -= 2
+			down = !down
+		} else if idx < 0 {
+			idx += 2
+			down = !down
+		}
+	}
+
+	return string(bytes.Join(rows, nil))
 }
