@@ -2,6 +2,10 @@ package leetcode
 
 import (
 	"bytes"
+	"math"
+	"regexp"
+	"strconv"
+	"strings"
 )
 
 // 001
@@ -205,4 +209,91 @@ func convert(s string, numRows int) string {
 	}
 
 	return string(bytes.Join(rows, nil))
+}
+
+// 007
+const (
+	MaxInt32 = int(^uint32(0) >> 1)
+	MinInt32 = ^MaxInt32
+)
+
+func reverse(x int) int {
+	var minus bool
+	if x < 0 {
+		x = -x
+		minus = true
+	}
+	src := strconv.Itoa(x)
+	dst := make([]byte, len(src))
+	j := 0
+	for i := len(src) - 1; i > -1; i-- {
+		dst[j] = src[i]
+		j++
+	}
+
+	to, _ := strconv.Atoi(string(dst))
+	if minus {
+		to = -to
+	}
+
+	if to > MaxInt32 || to < MinInt32 {
+		to = 0
+	}
+
+	return to
+}
+
+// 008
+var patt = regexp.MustCompile(`^[\s]*([\-\+]{0,1}[0-9]+)`)
+
+func myAtoi(str string) int {
+	// 1 extract effect str
+	res := patt.FindStringSubmatch(str)
+	if len(res) == 0 {
+		return 0
+	}
+
+	// 2 atoi
+	str = res[len(res)-1]
+	// d, _ := strconv.Atoi(str)
+
+	// signed or not
+	minus := false
+	if str[0] == '+' || str[0] == '-' {
+		if str[0] == '-' {
+			minus = true
+		}
+		str = str[1:]
+	}
+
+	// base may overflow
+	str = strings.TrimLeft(str, "0")
+	if len(str) > 10 {
+		if minus {
+			return MinInt32
+		}
+		return MaxInt32
+	}
+	var (
+		l    = len(str)
+		base = int(math.Pow10(l - 1))
+		sum  int
+	)
+
+	for i := range str {
+		sum += base * int(str[i]-'0')
+		base /= 10
+	}
+
+	if minus {
+		sum = -sum
+	}
+
+	if sum > MaxInt32 {
+		sum = MaxInt32
+	} else if sum < MinInt32 {
+		sum = MinInt32
+	}
+
+	return sum
 }

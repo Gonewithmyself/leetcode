@@ -176,3 +176,56 @@ func Test_convert(t *testing.T) {
 		})
 	}
 }
+
+func Test_reverse(t *testing.T) {
+	type args struct {
+		x int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		// TODO: Add test cases.
+		{"x", args{123}, 321},
+		{"x", args{-123}, -321},
+		{"x", args{120}, 21},
+		{"x", args{123}, 321},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := reverse(tt.args.x); got != tt.want {
+				t.Errorf("reverse() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_myAtoi(t *testing.T) {
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		// TODO: Add test cases.
+		{"xx", args{"   -42"}, -42},
+		{"xx", args{"   +42"}, 42},
+		{"xx", args{"42"}, 42},
+		{"xx", args{"4193 with words"}, 4193},
+		{"xx", args{"words and 987"}, 0},
+		{"xx", args{"-91283472332"}, -2147483648},
+		{"xx", args{"-000000000000000000000000000000000000000000000000001"}, -1},
+		{"xx", args{"20000000000000000000"}, 2147483647},
+		// """"
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := myAtoi(tt.args.str); got != tt.want {
+				t.Errorf("myAtoi() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
