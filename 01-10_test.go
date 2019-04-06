@@ -229,3 +229,67 @@ func Test_myAtoi(t *testing.T) {
 		})
 	}
 }
+
+func Test_isPalindrome(t *testing.T) {
+	type args struct {
+		x int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		// TODO: Add test cases.
+		{"xx", args{121}, true},
+		{"xx", args{-121}, false},
+		{"xx", args{10}, false},
+		{"xx", args{111}, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := isPalindrome(tt.args.x); got != tt.want {
+				t.Errorf("isPalindrome() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_isMatch(t *testing.T) {
+	type args struct {
+		s string
+		p string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		// TODO: Add test cases.
+		{"xx0", args{"aa", "a"}, false},
+		{"xx1", args{"aa", "a*"}, true},
+		{"xx2", args{"ab", ".*"}, true},
+
+		{"xx", args{"mississippi", "mis*is*p*."}, false},
+
+		{"xx", args{"aa", "a"}, false},
+		{"xx", args{"aa", "a"}, false},
+		{"xx", args{"aa", "a"}, false},
+		{"xx99", args{"mississippi", "mis*is*ip*."}, true},
+		{"xx33", args{"aab", "c*a*b"}, true},
+		{"xx3", args{"", "c*a*b"}, false},
+		{"xx3", args{"aa", ""}, false},
+		{"xx30", args{"", ""}, false},
+		{"xx", args{"aaa", "aaaa"}, false},
+
+		{"ab", args{"ab", ".*c"}, false},
+		{"aaa", args{"aaa", "a*a"}, true},
+		{"aaa", args{"aaa", "ab*a*c*a"}, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := isMatch(tt.args.s, tt.args.p); got != tt.want {
+				t.Errorf("isMatch() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

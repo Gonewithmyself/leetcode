@@ -297,3 +297,46 @@ func myAtoi(str string) int {
 
 	return sum
 }
+
+// 009
+func isPalindrome(x int) bool {
+	if x < 0 {
+		return false
+	}
+	var (
+		orig = x
+		nums = make([]int8, 0, 10)
+		sum  int
+	)
+	for x > 0 {
+		d := int8(x % 10)
+		x /= 10
+		nums = append(nums, d)
+	}
+
+	l := len(nums) - 1
+	for i := l; i > -1; i-- {
+		sum += int(math.Pow10(l-i)) * int(nums[i])
+	}
+
+	return sum == orig
+}
+
+// 010
+func isMatch(s string, p string) bool {
+	var (
+		slen = len(s)
+		plen = len(p)
+	)
+	if plen == 0 {
+		return slen == 0
+	}
+
+	firstMatch := slen != 0 && (s[0] == p[0] || p[0] == '.')
+
+	if plen > 1 && p[1] == '*' {
+		return isMatch(s, p[2:]) ||
+			firstMatch && isMatch(s[1:], p)
+	}
+	return firstMatch && isMatch(s[1:], p[1:])
+}
